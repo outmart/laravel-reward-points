@@ -1,0 +1,40 @@
+{
+    "name": "outmart/laravel-reward-points",
+    "description": "Grant and manage reward points for your customers.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "ecommerce",
+        "outmart",
+        "reward-points",
+        "module"
+    ],
+    "authors": [
+        {
+            "name": "Karim Mohamed (Komtcho)",
+            "email": "komicho1996@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "laravel/framework": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OutMart\\Laravel\\RewardPoints\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OutMart\\Laravel\\RewardPoints\\RewardPointsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
