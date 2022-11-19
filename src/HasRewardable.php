@@ -36,7 +36,7 @@ trait HasRewardable
     public function withdrawPoints(int $points, string $comment = null)
     {
         if ($this->getPoints() < $points) {
-            dd('Con\'t');
+            throw new \Exception('OutMart: You cannot deduct more points than the customer has available.');
         }
 
         $this->points()->create([
