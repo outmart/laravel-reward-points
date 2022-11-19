@@ -2,6 +2,7 @@
 
 namespace OutMart\Laravel\RewardPoints;
 
+use Carbon\Carbon;
 use OutMart\Laravel\RewardPoints\Models\RewardPoint;
 
 trait HasRewardable
@@ -13,12 +14,13 @@ trait HasRewardable
      * @param string $comment
      * @return int \OutMart\Laravel\RewardPoints\HasRewardable
      */
-    public function addPoints(int $points, string $comment = null)
+    public function addPoints(int $points, string $comment = null, $expired_at = null)
     {
         $this->points()->create([
             'type' => 'add',
             'points' => $points,
             'comment' => $comment,
+            'expired_at' => $expired_at,
         ]);
 
         return $this->getPoints();
@@ -53,7 +55,11 @@ trait HasRewardable
      */
     public function getPoints()
     {
-        $added_points = $this->points()->where('type', 'add')->sum('points');
+        $added_points = $this->points()->where('type', 'add')
+            ->whereNull('expired_at')
+            ->orWhereDate('expired_at', '>', Carbon::now())
+            ->sum('points');
+
         $withdraw_points = $this->points()->where('type', 'withdraw')->sum('points');
 
         return $added_points - $withdraw_points;
