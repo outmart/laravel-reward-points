@@ -47,7 +47,7 @@ trait HasRewardable
             'comment' => $comment,
         ]);
 
-        return $available_points - 1;
+        return $available_points - $points;
     }
 
     /**
@@ -64,16 +64,6 @@ trait HasRewardable
         $withdraw_points = $this->points()->where('type', 'withdraw')->sum('points');
 
         return $added_points - $withdraw_points;
-    }
-
-    /**
-     * Alternative of getPoints method.
-     *
-     * @return int
-     */
-    public function getPointsAttribute()
-    {
-        return $this->getPoints();
     }
 
     /**
