@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('outmart_reward_points', function (Blueprint $table) {
             $table->id();
-            $table->morphs('modelble');
+            $table->morphs('rewardable');
             $table->enum('type', ['add', 'withdraw'])->default('add');
-            $table->integer('points');
+            $table->unsignedInteger('points');
             $table->text('comment')->nullable();
             $table->timestamp('expired_at')->nullable();
             $table->timestamps();
