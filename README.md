@@ -31,8 +31,8 @@ class Customer extends Model
 ```php
 $customer->addPoints(
     points: 500,
-    comment: 'Comment',
-    expired_at: Carbon::now()->addDay()
+    comment: 'Comment', // nullable
+    expired_at: Carbon::now()->addDay() // nullable
 );
 ```
 
@@ -41,7 +41,7 @@ $customer->addPoints(
 ```php
 $customer->withdrawPoints(
     points: 500,
-    comment: 'Comment'
+    comment: 'Comment' // nullable
 );
 ```
 
@@ -49,4 +49,6 @@ $customer->withdrawPoints(
 
 ```php
 $customer->getPoints();
+// or
+$customer->points
 ```
