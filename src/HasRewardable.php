@@ -8,7 +8,7 @@ use OutMart\Laravel\RewardPoints\Models\RewardPoint;
 trait HasRewardable
 {
     /**
-     * Add points to a specific customer
+     * Add points to a specific model
      *
      * @param int $points
      * @param string $comment
@@ -27,7 +27,7 @@ trait HasRewardable
     }
 
     /**
-     * Withdraw points to a specific customer
+     * Withdraw points from a specific model
      *
      * @param int $points
      * @param string $comment
@@ -35,8 +35,10 @@ trait HasRewardable
      */
     public function withdrawPoints(int $points, string $comment = null)
     {
-        if ($this->getPoints() < $points) {
-            throw new \Exception('OutMart: You cannot deduct more points than the customer has available.');
+        $available_points = $this->getPoints();
+
+        if ($available_points < $points) {
+            throw new \Exception('OutMart: You cannot deduct more points than that already exists.');
         }
 
         $this->points()->create([
@@ -45,7 +47,7 @@ trait HasRewardable
             'comment' => $comment,
         ]);
 
-        return $this->getPoints();
+        return $available_points - 1;
     }
 
     /**
@@ -55,10 +57,9 @@ trait HasRewardable
      */
     public function getPoints()
     {
-        $added_points = $this->points()->where('type', 'add')
-            ->whereNull('expired_at')
-            ->orWhereDate('expired_at', '>', Carbon::now())
-            ->sum('points');
+        $added_points = $this->points()->where('type', 'add')->where(function ($query) {
+            $query->whereNull('expired_at')->orWhereDate('expired_at', '>', Carbon::now());
+        })->sum('points');
 
         $withdraw_points = $this->points()->where('type', 'withdraw')->sum('points');
 
@@ -66,10 +67,22 @@ trait HasRewardable
     }
 
     /**
-     * Get all of the customer's points.
+     * Alternative of getPoints method.
+     *
+     * @return int
+     */
+    public function getPointsAttribute()
+    {
+        return $this->getPoints();
+    }
+
+    /**
+     * Get all records of the model's points.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function points()
     {
-        return $this->morphMany(RewardPoint::class, 'modelble');
+        return $this->morphMany(RewardPoint::class, 'rewardable');
     }
 }
