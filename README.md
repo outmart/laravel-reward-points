@@ -49,6 +49,4 @@ $customer->withdrawPoints(
 
 ```php
 $customer->getPoints();
-// or
-$customer->points
 ```
