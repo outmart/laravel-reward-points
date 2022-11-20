@@ -14,6 +14,10 @@ class RewardPointsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        $this->app->singleton('points', function () {
+            return new PointsManager();
+        });
     }
 
     /**
