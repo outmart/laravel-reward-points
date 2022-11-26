@@ -4,49 +4,14 @@
 
 Grant and manage reward points for your customers.
 
-## Install
+## Documentation
 
-```bash
-composer require outmart/laravel-reward-points
-```
+You can find the detailed documentation here in [Reward Points Documentation](https://outmart.github.io/packages/laravel/reward-points/).
 
-## Add trait
+## Contributing
 
-```php
-<?php
+Thank you for considering contributing to this package! Be one of the Outmart team.
 
-namespace App\Models;
+## License
 
-use OutMart\Laravel\RewardPoints\HasRewardable;
-use Illuminate\Database\Eloquent\Model;
-
-class Customer extends Model
-{
-    use HasRewardable;
-}
-```
-
-## Add points
-
-```php
-$customer->addPoints(
-    points: 500,
-    comment: 'Comment', // nullable
-    expired_at: Carbon::now()->addDay() // nullable
-);
-```
-
-## Withdraw points
-
-```php
-$customer->withdrawPoints(
-    points: 500,
-    comment: 'Comment' // nullable
-);
-```
-
-## Get points
-
-```php
-$customer->getPoints();
-```
+This package is an open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
