@@ -44,4 +44,9 @@ class RewardPoint extends Model
     protected $casts = [
         'expired_at' => 'datetime'
     ];
+
+    public function rewardable()
+    {
+        return $this->morphTo();
+    }
 }
