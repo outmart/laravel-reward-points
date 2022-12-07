@@ -55,7 +55,7 @@ trait HasRewardable
      *
      * @return int
      */
-    public function getPoints()
+    public function totalPoints()
     {
         $added_points = $this->points()->where('type', 'add')->where(function ($query) {
             $query->whereNull('expired_at')->orWhereDate('expired_at', '>', Carbon::now());
