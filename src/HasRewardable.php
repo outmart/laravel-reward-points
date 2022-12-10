@@ -23,7 +23,7 @@ trait HasRewardable
             'expired_at' => $expired_at,
         ]);
 
-        return $this->getPoints();
+        return $this->totalPoints();
     }
 
     /**
@@ -35,7 +35,7 @@ trait HasRewardable
      */
     public function withdrawPoints(int $points, string $comment = null)
     {
-        $available_points = $this->getPoints();
+        $available_points = $this->totalPoints();
 
         if ($available_points < $points) {
             throw new \Exception('OutMart: You cannot deduct more points than that already exists.');
